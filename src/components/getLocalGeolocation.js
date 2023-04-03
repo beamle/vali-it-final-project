@@ -13,9 +13,6 @@ const GetLocalGeolocation = () => {
     })
     return (
         <div>
-            <h3>My gelocation:</h3>
-            <h4>latitude: {latitude} <br/>
-                longitude: {longitude}</h4>
         </div>
     );
 };
