@@ -8,6 +8,8 @@ import {FullData} from "../../../utils/fullData";
 function SortedFirms() {
 
     const fullData = useContext(FullData);
+    console.log("SEE ON FULL DATA")
+    console.log(fullData)
     const employees = [];
     const firms = [];
     const timeslots = [];
@@ -16,6 +18,7 @@ function SortedFirms() {
         fullData.firmsList.map(firm => firms.push(firm))
         fullData.timeslots.map(timeslot => timeslots.push(timeslot))
     }
+
 
     // TODO: ASK WHY fullData.employees DOESNT WORK?
 
@@ -67,6 +70,7 @@ function SortedFirms() {
                             return (
                                 <Grid key={firm.id} item xs={12} sm={6} md={4}>
                                     <Item elevation={2}>
+                                        <img src={firm.imgSrc} width="100%"/>
                                         <h6>{firm.Name}</h6>
                                         <p>{firm.Description}</p>
                                         <p>Vabad ajad: {firm.Free_time_slots.map((timeslot, index) => {
