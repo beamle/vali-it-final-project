@@ -1,53 +1,69 @@
-import React, {useEffect, useState} from "react";
-import {getDocs, collection} from "firebase/firestore";
-import {db} from "../../../config/firebase";
+import React, {useContext} from "react";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from '@mui/material/Grid';
 import {styled} from "@mui/material/styles";
-
+import {FullData} from "../../../utils/fullData";
 
 function SortedFirms() {
-    const [firmsList, setFirmsList] = useState([]);
-    const firmsCollection = collection(db, "firma");
 
-    const Item = styled(Paper)(({theme}) => ({
+    const fullData = useContext(FullData);
+    const employees = [];
+    const firms = [];
+    const timeslots = [];
+    if(fullData.employees !== undefined && fullData.employees !== {}){
+        fullData.employees.map(employee => employees.push(employee))
+        fullData.firmsList.map(firm => firms.push(firm))
+        fullData.timeslots.map(timeslot => timeslots.push(timeslot))
+    }
+
+    // TODO: ASK WHY fullData.employees DOESNT WORK?
+
+    // const employees = fullData.employees;
+    // const firmsList = fullData.firmsList;
+    // const {firmsList} = fullData.firmsList
+    // const timeslots = fullData.timeslots;
+    const firmLocation = {};
+    firms.map(firm => {
+        console.log(firm["Location"]["_lat"])
+    })
+
+
+
+    //EXAMPLE HOW TO WORK WITH FULL DATA
+         // LOOPING THROUGH EMPLOYEES WITH SALONG+ ID AND STORING THEM TO ARR
+    // const salongPlusEmployeesArr = []
+    // const companyKey = "xHMJkzpMtE840bfbpuMJ"; // SALON+ ID
+    // if(employees !== undefined) {
+    //     employees.map(employee => {
+    //         if (employee.companyId === companyKey) {
+    //             salongPlusEmployeesArr.push(employee);
+    //         }
+    //     })
+    //     // PRINTING ALL SALON+ EMPLOYEES
+    //     salongPlusEmployeesArr.map(employee => {
+    //         // console.log(employee.name)
+    //     })
+    // }
+
+
+
+
+
+
+    const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-    })); // STYLES GRID ITEM
-
-
-    useEffect(() => {
-        async function getFirmsList() {
-            // READ THE DATA
-            // SET THE FIRMS LIST
-            try {
-                const docsData = await getDocs(firmsCollection)
-                const filteredDocsData = docsData.docs.map((docItem) => ({
-                    ...docItem.data(), // adds docItem.id to the same object
-                    id: docItem.id
-                }));
-                console.log(filteredDocsData);
-                //.toDate().toDateString()
-                //.Free_time_slots[index].seconds.toDate().toDateString()
-                setFirmsList(filteredDocsData);
-            } catch (err) {
-                console.error(err)
-            }
-        }
-
-        getFirmsList();
-    }, []);
-
+    }));
 
     return (
         <div>
             <Box sx={{flexGrow: 1, width: '100%'}}>
                 <Grid rowSpacing={2} container wrap="wrap">
-                    {firmsList.map((firm) => {
+                    {firms.map((firm) => {
                             return (
                                 <Grid key={firm.id} item xs={12} sm={6} md={4}>
                                     <Item elevation={2}>
@@ -61,7 +77,6 @@ function SortedFirms() {
                                             )
                                         })}
                                         </p>
-                                        {/*<h6>Free time slots: {(firm.Free_time_slots[index].seconds).toDate().toDateString()}</h6>*/}
                                     </Item>
                                 </Grid>
                             )

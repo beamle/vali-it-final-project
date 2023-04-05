@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
-import {useState} from "react";
+import {useState, useContext} from "react";
 
 
 function Navigation() {
