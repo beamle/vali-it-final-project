@@ -8,6 +8,8 @@ import {db} from "./config/firebase";
 import {styled} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import {FullData} from "./utils/fullData";
+// import {storage} from 'firebase';
+// import {ref} from 'firebase/storage';
 
 
 function App() {
