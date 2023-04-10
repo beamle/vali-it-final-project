@@ -1,15 +1,11 @@
 import './App.css';
 import React, {createContext, useContext, useEffect, useState} from "react";
-import Navigation from "./components/header/Navigation";
 import SortedFirms, {MyContext} from "./components/body/main-page/SortedFirms";
-import GetLocalGeolocation from "./components/getLocalGeolocation";
 import {collection, getDocs} from "firebase/firestore";
 import {db} from "./config/firebase";
-import {styled} from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import {FullData} from "./utils/fullData";
-// import {storage} from 'firebase';
-// import {ref} from 'firebase/storage';
+import {Routes, Route} from "react-router-dom";
+import {SelectedService} from "./components/pages/SelectedService";
 
 
 function App() {
@@ -24,6 +20,7 @@ function App() {
     const timeslotsCollection = collection(db, "time_slots");
 
     const [fullData, setFullData] = useState({});
+    const [newFullData, setNewFullData] = useState([]);
 
 
 
@@ -63,12 +60,46 @@ function App() {
     }, []);
 
 
+    /** Making <newFullData> which is array that contains enriched (with COMPANY and EMPLOYEE info) TIMESLOT objects */
+    useEffect(() => {
+        if(fullData !== undefined) {
+            const employees = [];
+            const firms = [];
+            const timeslots = [];
+            if(fullData.employees !== undefined && fullData.employees !== {}){
+                fullData.employees.map(employee => employees.push(employee))
+                fullData.firmsList.map(firm => firms.push(firm))
+                fullData.timeslots.map(timeslot => timeslots.push(timeslot))
+            }
+            console.log("Infinite loop checker")
+            const newFullData = [];
+            if(fullData.employees !== undefined && fullData.employees !== {}){
+                employees.map(employee => {
+                    firms.map(firm => {
+                        if (firm.id === employee.companyId){
+                            timeslots.map(timeslot => {
+                                if (employee.companyId === timeslot.companyId && timeslot.employeeId === employee.id){
+                                    newFullData.push({...timeslot,...employee, ...firm})
+                                }
+                            })
+                        }
+                    })
+                });setNewFullData(newFullData)
+            }
+        }
+    }, [fullData])
+
+    //     TODO: make a new arrayu that conaints enriched (with company and employee info) TIMESLOT objects
+    //     TODO: pass it to SortedFirms where i loop them and just return (show)
+    // console.log(fullData)
     return (
     <div className="App">
         <FullData.Provider value={fullData}>
-            <Navigation/>
-            <GetLocalGeolocation/>
-            <SortedFirms/>
+            <Routes>
+                <Route path="/" element={ <SortedFirms props={newFullData}/> } />
+                <Route path="/selectedService/:timeslotId" element={ <SelectedService/> } />
+                {/*expected*/}
+            </Routes>
         </FullData.Provider>
 
     </div>
