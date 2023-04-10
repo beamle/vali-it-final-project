@@ -7,7 +7,7 @@ import {FullData} from "./utils/fullData";
 import {Routes, Route} from "react-router-dom";
 import {SelectedService} from "./components/pages/SelectedService";
 
-
+//test
 function App() {
 
 
