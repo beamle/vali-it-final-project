@@ -34,7 +34,6 @@ function Navigation() {
                             // inputProps={{ 'aria-label': 'search' }}
                             onChange={event => setSearchData(event.target.value)}
                             value = {searchData}
-
                         />
                         <IconButton type="button" sx={{ p: '12px' }} aria-label="search"> <SearchIcon/> </IconButton>
                     </Paper>

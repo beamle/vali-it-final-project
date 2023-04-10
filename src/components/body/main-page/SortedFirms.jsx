@@ -19,7 +19,6 @@ function SortedFirms() {
         color: theme.palette.text.secondary,
     })); // STYLES GRID ITEM
 
-
     useEffect(() => {
         async function getFirmsList() {
             // READ THE DATA
@@ -40,7 +39,9 @@ function SortedFirms() {
         }
 
         getFirmsList();
-    }, []);
+    }, []); // filteredDocsData
+
+
 
 
     return (
