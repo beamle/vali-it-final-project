@@ -8,17 +8,22 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import {useState, useContext} from "react";
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Button from "@mui/material/Button";
+import {useNavigate} from "react-router-dom";
+import Auth from "../auth/auth";
 
 function Navigation() {
     const [searchData, setSearchData] = useState('');
-
+    const navigate = useNavigate();
 
     return (
-        <Box>
-            <AppBar elevation={0} position="static" sx={{backgroundColor: '#B8B8F3'}}>
+        <Box mb={2}>
+            <AppBar elevation={2} position="static" sx={{backgroundColor: '#B8B8F3'}}>
                 <Toolbar sx={{display: 'flex', justifyContent: 'center'}}>
-                    <IconButton sx={{ justifyContent: 'flex-start' }}><img src="./headerPictures/BeautyFinderLogo.png" width={'75px'} alt="logo"/></IconButton>
+                    <IconButton sx={{ justifyContent: 'flex-start' }}>
+                        <LocationOnIcon sx={{ fontSize: 35 }} />
+                    </IconButton>
                     <IconButton size="large"
                                 sx={{ mr: 2 }}
                     />
@@ -31,15 +36,22 @@ function Navigation() {
                         <InputBase
                             sx={{ ml: 1, flex: 1 }}
                             placeholder="Search by location/service/time"
-                            // inputProps={{ 'aria-label': 'search' }}
                             onChange={event => setSearchData(event.target.value)}
-                            value = {searchData}
-
+                            value={searchData}
                         />
-                        <IconButton type="button" sx={{ p: '12px' }} aria-label="search"> <SearchIcon/> </IconButton>
+                        <IconButton type="button" sx={{ p: '12px' }} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
                     </Paper>
+                    <Button
+                        sx={{ m: "0 25px", backgroundColor: '#F397D6', color: 'white', '&:hover': { backgroundColor: '#B8B8F3' } }}
+                        variant="contained"
+                        onClick={() => navigate(`/auth`)}
+                    >
+                        add timeslot
+                    </Button>
                     {/*End of search input*/}
-                    <IconButton/>
+                    <IconButton />
                 </Toolbar>
             </AppBar>
         </Box>
