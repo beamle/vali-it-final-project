@@ -1,8 +1,6 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
 import SortedFirms from "./components/body/main-page/SortedFirms";
-import {collection, getDocs} from "firebase/firestore";
-import {db} from "./config/firebase";
 import {FullData} from "./utils/fullData";
 import {Routes, Route} from "react-router-dom";
 import {SelectedService} from "./components/pages/SelectedService";
@@ -10,6 +8,9 @@ import Booking from "./components/pages/Booking";
 import {AddAlarm} from "@mui/icons-material";
 import AddTimeslot from "./components/pages/AddTimeslot";
 import Auth from "./components/auth/auth";
+import {collection, getDocs} from "firebase/firestore";
+import {db} from "./config/firebase";
+import ClosestTimesSorting from "./components/sort/ClosestTimeSorting";
 
 //test
 function App() {
@@ -25,6 +26,7 @@ function App() {
 
     const [fullData, setFullData] = useState({});
     const [newFullData, setNewFullData] = useState([]);
+
 
 
 
@@ -88,7 +90,7 @@ function App() {
                             })
                         }
                     })
-                });setNewFullData(newFullData)
+                });setNewFullData(ClosestTimesSorting(newFullData))
             }
         }
     }, [fullData])

@@ -6,12 +6,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import {useState, useContext} from "react";
+import {useState} from "react";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
-import Auth from "../auth/auth";
 
 function Navigation() {
     const [searchData, setSearchData] = useState('');

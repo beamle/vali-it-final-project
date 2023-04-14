@@ -2,9 +2,18 @@ import React, {useState} from 'react';
 import {signOut} from "firebase/auth";
 import {auth} from "../../config/firebase";
 import Box from "@mui/material/Box";
-import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import InputLabel  from "@mui/material/InputLabel";
+import MenuItem  from "@mui/material/MenuItem";
+import Select  from "@mui/material/Select";
+import AddCompanyInfo from "./AddCompanyInfo";
+import Button from "@mui/material/Button";
+import Kaspar from "./Kaspar";
 
-const AddTimeslot = () => {
+const AddTimeslot = ({ authUserId, companyId }) => {
+    console.log(companyId); // this should log the companyId value
+    // rest of the component code
+    const [showAddCompanyInfo, setShowAddCompanyInfo] = useState(false);
     const [error, setError] = useState('');
 
     const logOut = async () => {
@@ -15,33 +24,15 @@ const AddTimeslot = () => {
             console.log(err);
         }
     }
-
-    const [age, setAge] = React.useState('');
-
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
-
+    console.log(companyId, "in ADDTIMESLOT")
     return (
         <div>
+            {showAddCompanyInfo ? <AddCompanyInfo authUserId={authUserId}/> : (
+                <Button onClick={() => setShowAddCompanyInfo(true)}>Add company Info </Button>
+            )}
             <h1>Logged in</h1>
             <button onClick={logOut}>Logout</button>
-            <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={age}
-                        label="Age"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                </FormControl>
-            </Box>
+            <Kaspar authUserId={authUserId} companyId={companyId}/>
             {error && <p>{error}</p>}
         </div>
     );
