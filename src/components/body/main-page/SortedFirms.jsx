@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from '@mui/material/Grid';
@@ -54,6 +54,7 @@ function SortedFirms({ props }) {
         const time = timestamp.slice(timestamp.indexOf(',') + 2, timestamp.indexOf(',') + 7);
         return `${timestamp.slice(0, timestamp.indexOf(','))}, ${time}`;
     }
+
 
     return (
         <div>
