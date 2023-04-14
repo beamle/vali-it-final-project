@@ -1,11 +1,15 @@
 import './App.css';
-import React, {createContext, useContext, useEffect, useState} from "react";
-import SortedFirms, {MyContext} from "./components/body/main-page/SortedFirms";
+import React, {useEffect, useState} from "react";
+import SortedFirms from "./components/body/main-page/SortedFirms";
 import {collection, getDocs} from "firebase/firestore";
 import {db} from "./config/firebase";
 import {FullData} from "./utils/fullData";
 import {Routes, Route} from "react-router-dom";
 import {SelectedService} from "./components/pages/SelectedService";
+import Booking from "./components/pages/Booking";
+import {AddAlarm} from "@mui/icons-material";
+import AddTimeslot from "./components/pages/AddTimeslot";
+import Auth from "./components/auth/auth";
 
 
 function App() {
@@ -89,16 +93,14 @@ function App() {
         }
     }, [fullData])
 
-    //     TODO: make a new arrayu that conaints enriched (with company and employee info) TIMESLOT objects
-    //     TODO: pass it to SortedFirms where i loop them and just return (show)
-    // console.log(fullData)
     return (
     <div className="App">
         <FullData.Provider value={fullData}>
             <Routes>
                 <Route path="/" element={ <SortedFirms props={newFullData}/> } />
-                <Route path="/selectedService/:timeslotId" element={ <SelectedService/> } />
-                {/*expected*/}
+                <Route path="/selectedService/:companyId" element={ <SelectedService props={newFullData} /> } />
+                <Route path="/selectedService/:companyId/:serviceName" element={ <Booking props={newFullData} />} />
+                <Route path="/:auth" element={ <Auth props={newFullData} />} />
             </Routes>
         </FullData.Provider>
 
@@ -107,22 +109,3 @@ function App() {
 }
 
 export default App;
-
-
-
-//EXAMPLE Printing out all salon+ employees
-// const companyKey = "xHMJkzpMtE840bfbpuMJ"; // SALONG ID
-// let arr = []
-//
-// employeesDocsData.map(function(employee){
-//     if (employee.companyId ===  companyKey) {
-//         arr.push(employee);
-//     }
-// })
-//
-// arr.map(function (employee){
-//     console.log(employee.name)
-// })
-// console.log("THOS OS ARRAY");
-
-//EXAMPLE Printing out all times that salon+ has
